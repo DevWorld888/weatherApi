@@ -4,6 +4,7 @@ import {API_KEY,WEATHER_API_URL} from '../config.js'
 
 export const getWeatherByCity = async(req,res) =>{
     const city = req.params.city;
+ 
     try {
         const response = await axios.get(WEATHER_API_URL,{
             params: {
@@ -12,12 +13,15 @@ export const getWeatherByCity = async(req,res) =>{
                 units: 'metric'
             }
         })
-       res.send(response.data)
+       res.json(
+        response.data,
+       )
         
     } catch (error) {
         if (error.response) {
+            
             res.status(error.response.status).json({
-                error: error.response.data.message
+                error: error.response.data.message,
             });
         } 
     }
